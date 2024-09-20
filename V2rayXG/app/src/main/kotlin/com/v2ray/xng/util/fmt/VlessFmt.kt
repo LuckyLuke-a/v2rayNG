@@ -104,6 +104,29 @@ object VlessFmt {
             if (!TextUtils.isEmpty(tlsSetting.spiderX)) {
                 dicQuery["spx"] = Utils.urlEncode(tlsSetting.spiderX.orEmpty())
             }
+            if (dicQuery["flow"] == "xtls-segaro-vision") {
+                if (!TextUtils.isEmpty(tlsSetting.serverRandPacket)) {
+                    dicQuery["serverandpacket"] =
+                        Utils.urlEncode(tlsSetting.serverRandPacket.orEmpty())
+                }
+                if (!TextUtils.isEmpty(tlsSetting.clientRandPacket)) {
+                    dicQuery["clientrandpacket"] =
+                        Utils.urlEncode(tlsSetting.clientRandPacket.orEmpty())
+                }
+                if (!TextUtils.isEmpty(tlsSetting.serverRandPacketCount)) {
+                    dicQuery["serverandpacketcount"] =
+                        Utils.urlEncode(tlsSetting.serverRandPacketCount.orEmpty())
+                }
+                if (!TextUtils.isEmpty(tlsSetting.clientRandPacketCount)) {
+                    dicQuery["clientrandpacketcount"] =
+                        Utils.urlEncode(tlsSetting.clientRandPacketCount.orEmpty())
+                }
+                if (!TextUtils.isEmpty(tlsSetting.splitPacket)) {
+                    dicQuery["splitpacket"] = Utils.urlEncode(tlsSetting.splitPacket.orEmpty())
+                }
+                dicQuery["paddingsize"] = (tlsSetting.paddingSize ?: "").toString()
+                dicQuery["subchunksize"] = (tlsSetting.subchunkSize ?: "").toString()
+            }
         }
         dicQuery["type"] =
             streamSetting.network.ifEmpty { V2rayConfig.DEFAULT_NETWORK }
