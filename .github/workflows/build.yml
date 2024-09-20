@@ -40,17 +40,8 @@ jobs:
 
     - name: Build dependencies
       run: |
-        mkdir ${{ github.workspace }}/build
-        cd ${{ github.workspace }}/build
-        git clone --depth=1 -b main https://github.com/LuckyLuke-a/AndroidLibXrayLite.git
-        cd AndroidLibXrayLite
-        mkdir -p assets data
-        bash gen_assets.sh download
-        cp -v data/*.dat assets/
-        go mod tidy -v
-        gomobile init
-        gomobile bind -v -androidapi 21 -ldflags='-s -w' ./
-        cp *.aar ${{ github.workspace }}/V2rayXG/app/libs/
+        cd ${{ github.workspace }}/V2rayXG/app/libs/
+        wget https://github.com/LuckyLuke-a/AndroidLibXrayLite/releases/latest/download/libv2ray.aar
       shell: bash
 
     - name: Build APK
