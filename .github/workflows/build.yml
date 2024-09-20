@@ -7,7 +7,7 @@ on:
       - "v*.*.*"
 
 env:
-  APKPATH: ${{ github.workspace }}/V2rayXG/app/build/outputs/apk/debug
+  APKPATH: ${{ github.workspace }}/V2rayNG/app/build/outputs/apk/debug
 
 jobs:
   build:
@@ -40,13 +40,13 @@ jobs:
 
     - name: Build dependencies
       run: |
-        cd ${{ github.workspace }}/V2rayXG/app/libs/
+        cd ${{ github.workspace }}/V2rayNG/app/libs/
         wget https://github.com/LuckyLuke-a/AndroidLibXrayLite/releases/latest/download/libv2ray.aar
       shell: bash
 
     - name: Build APK
       run: |
-        cd ${{ github.workspace }}/V2rayXG
+        cd ${{ github.workspace }}/V2rayNG
         chmod 755 gradlew
         ./gradlew assembleDebug
       shell: bash
