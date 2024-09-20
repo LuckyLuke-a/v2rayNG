@@ -6,6 +6,9 @@ on:
     tags:
       - "v*.*.*"
 
+env:
+  APKPATH: ${{ github.workspace }}/V2rayXG/app/build/outputs/apk/debug
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,13 +52,10 @@ jobs:
       shell: bash
 
     - name: Build APK
-      env:
-        APKPATH: ${{ github.workspace }}/V2rayXG/app/build/outputs/apk/debug
       run: |
         cd ${{ github.workspace }}/V2rayXG
         chmod 755 gradlew
         ./gradlew assembleDebug
-        rm -rf ${{env.APKPATH}}/*.json
       shell: bash
 
     - name: Upload APK
@@ -68,6 +68,6 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        files: ${{ env.APKPATH }}/*
+        file: ${{ env.APKPATH }}/*.apk
         tag: ${{ github.ref }}
         file_glob: true
