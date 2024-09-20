@@ -1,13 +1,10 @@
 name: Build APK
 
 on:
-  push:
   workflow_dispatch:
-    inputs:
-      XRAY_CORE_VERSION:
-        description: 'Xray core version or commit hash'
-        required: false
-
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -42,22 +39,35 @@ jobs:
       run: |
         mkdir ${{ github.workspace }}/build
         cd ${{ github.workspace }}/build
-        git clone --depth=1 -b main https://github.com/2dust/AndroidLibXrayLite.git
+        git clone --depth=1 -b main https://github.com/LuckyLuke-a/AndroidLibXrayLite.git
         cd AndroidLibXrayLite
-        go get github.com/xtls/xray-core@${{ github.event.inputs.XRAY_CORE_VERSION }} || true
+        go get github.com/luckyluke-a/xray-core@latest
         gomobile init
         go mod tidy -v
         gomobile bind -v -androidapi 21 -ldflags='-s -w' ./
         cp *.aar ${{ github.workspace }}/V2rayXG/app/libs/
+      shell: bash
 
     - name: Build APK
+      env:
+        APKPATH: ${{ github.workspace }}/V2rayXG/app/build/outputs/apk/debug
       run: |
         cd ${{ github.workspace }}/V2rayXG
         chmod 755 gradlew
         ./gradlew assembleDebug
+        rm -rf ${{env.APKPATH}}/*.json
+      shell: bash
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: apk
-        path: ${{ github.workspace }}/V2rayXG/app/build/outputs/apk/debug/
+        path: ${{ env.APKPATH }}/*
+
+    - name: Upload to Github releases
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        files: ${{ env.APKPATH }}/*
+        tag: ${{ github.ref }}
+        file_glob: true
