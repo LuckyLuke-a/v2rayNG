@@ -52,8 +52,8 @@
         android:id="@+id/l3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin">
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,8 +73,8 @@
         android:id="@+id/l4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin">
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -169,5 +169,145 @@
             android:inputType="text"
             android:nextFocusDown="@+id/sp_stream_fingerprint" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_server_rand_packet" />
+
+        <EditText
+            android:id="@+id/et_server_rand_packet"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="text"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_client_rand_packet" />
+
+        <EditText
+            android:id="@+id/et_client_rand_packet"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="text"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_server_rand_packet_count" />
+
+        <EditText
+            android:id="@+id/et_server_rand_packet_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="text"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_client_rand_packet_count" />
+
+        <EditText
+            android:id="@+id/et_client_rand_packet_count"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="text"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_split_packet" />
+
+        <EditText
+            android:id="@+id/et_split_packet"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="text"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_padding_size" />
+
+        <EditText
+            android:id="@+id/et_padding_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="number"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/l15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/server_lab_subchunk_size" />
+
+        <EditText
+            android:id="@+id/et_subchunk_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:inputType="number"
+            android:nextFocusDown="@+id/sp_stream_fingerprint" />
     </LinearLayout>
 </LinearLayout>

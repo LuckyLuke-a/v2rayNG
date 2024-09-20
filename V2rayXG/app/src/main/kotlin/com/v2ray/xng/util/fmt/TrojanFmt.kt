@@ -30,7 +30,14 @@ object TrojanFmt {
                 null,
                 null,
                 null,
-                null
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
             )
         } else {
             val queryParam = uri.rawQuery.split("&")
@@ -49,7 +56,8 @@ object TrojanFmt {
                 queryParam["authority"]
             )
             fingerprint = queryParam["fp"].orEmpty()
-            allowInsecure = if ((queryParam["allowInsecure"].orEmpty()) == "1") true else allowInsecure
+            allowInsecure =
+                if ((queryParam["allowInsecure"].orEmpty()) == "1") true else allowInsecure
             config.outboundBean?.streamSettings?.populateTlsSettings(
                 queryParam["security"] ?: V2rayConfig.TLS,
                 allowInsecure,
@@ -58,7 +66,14 @@ object TrojanFmt {
                 queryParam["alpn"],
                 null,
                 null,
-                null
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
             )
             flow = queryParam["flow"].orEmpty()
         }

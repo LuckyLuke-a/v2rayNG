@@ -53,7 +53,14 @@ object VlessFmt {
             queryParam["alpn"],
             queryParam["pbk"].orEmpty(),
             queryParam["sid"].orEmpty(),
-            queryParam["spx"].orEmpty()
+            queryParam["spx"].orEmpty(),
+            queryParam["serverandpacket"].orEmpty(),
+            queryParam["clientrandpacket"].orEmpty(),
+            queryParam["serverandpacketcount"].orEmpty(),
+            queryParam["clientrandpacketcount"].orEmpty(),
+            queryParam["splitpacket"].orEmpty(),
+            queryParam["paddingsize"].orEmpty().toIntOrNull(),
+            queryParam["subchunksize"].orEmpty().toIntOrNull(),
         )
 
         return config

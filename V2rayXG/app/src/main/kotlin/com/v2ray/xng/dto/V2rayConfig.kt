@@ -276,7 +276,15 @@ data class V2rayConfig(
                 val show: Boolean = false,
                 var publicKey: String? = null,
                 var shortId: String? = null,
-                var spiderX: String? = null
+                var spiderX: String? = null,
+                // REALITY-Xtls-Segaro-Vision settings
+                var serverRandPacket: String? = null,
+                var clientRandPacket: String? = null,
+                var serverRandPacketCount: String? = null,
+                var clientRandPacketCount: String? = null,
+                var splitPacket: String? = null,
+                var paddingSize: Int? = null,
+                var subchunkSize: Int? = null,
             )
 
             data class QuicSettingBean(
@@ -309,8 +317,11 @@ data class V2rayConfig(
                             tcpSetting.header.type = HTTP
                             if (!TextUtils.isEmpty(host) || !TextUtils.isEmpty(path)) {
                                 val requestObj = TcpSettingsBean.HeaderBean.RequestBean()
-                                requestObj.headers.Host = (host.orEmpty()).split(",").map { it.trim() }.filter { it.isNotEmpty() }
-                                requestObj.path = (path.orEmpty()).split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                                requestObj.headers.Host =
+                                    (host.orEmpty()).split(",").map { it.trim() }
+                                        .filter { it.isNotEmpty() }
+                                requestObj.path = (path.orEmpty()).split(",").map { it.trim() }
+                                    .filter { it.isNotEmpty() }
                                 tcpSetting.header.request = requestObj
                                 sni = requestObj.headers.Host?.getOrNull(0) ?: sni
                             }
@@ -359,7 +370,8 @@ data class V2rayConfig(
                     "h2", "http" -> {
                         network = "h2"
                         val h2Setting = HttpSettingsBean()
-                        h2Setting.host = (host.orEmpty()).split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                        h2Setting.host =
+                            (host.orEmpty()).split(",").map { it.trim() }.filter { it.isNotEmpty() }
                         sni = h2Setting.host.getOrNull(0) ?: sni
                         h2Setting.path = path ?: "/"
                         httpSettings = h2Setting
@@ -388,18 +400,39 @@ data class V2rayConfig(
             }
 
             fun populateTlsSettings(
-                streamSecurity: String, allowInsecure: Boolean, sni: String, fingerprint: String?, alpns: String?,
-                publicKey: String?, shortId: String?, spiderX: String?
+                streamSecurity: String,
+                allowInsecure: Boolean,
+                sni: String,
+                fingerprint: String?,
+                alpns: String?,
+                publicKey: String?,
+                shortId: String?,
+                spiderX: String?,
+                serverRandPacket: String?,
+                clientRandPacket: String?,
+                serverRandPacketCount: String?,
+                clientRandPacketCount: String?,
+                splitPacket: String?,
+                paddingSize: Int?,
+                subchunkSize: Int?,
             ) {
                 security = streamSecurity
                 val tlsSetting = TlsSettingsBean(
                     allowInsecure = allowInsecure,
                     serverName = sni,
                     fingerprint = fingerprint,
-                    alpn = if (alpns.isNullOrEmpty()) null else alpns.split(",").map { it.trim() }.filter { it.isNotEmpty() },
+                    alpn = if (alpns.isNullOrEmpty()) null else alpns.split(",").map { it.trim() }
+                        .filter { it.isNotEmpty() },
                     publicKey = publicKey,
                     shortId = shortId,
-                    spiderX = spiderX
+                    spiderX = spiderX,
+                    serverRandPacket = serverRandPacket,
+                    clientRandPacket = clientRandPacket,
+                    serverRandPacketCount = serverRandPacketCount,
+                    clientRandPacketCount = clientRandPacketCount,
+                    splitPacket = splitPacket,
+                    paddingSize = paddingSize,
+                    subchunkSize = subchunkSize,
                 )
                 if (security == TLS) {
                     tlsSettings = tlsSetting
@@ -475,9 +508,21 @@ data class V2rayConfig(
 
         fun getSecurityEncryption(): String? {
             return when {
-                protocol.equals(EConfigType.VMESS.name, true) -> settings?.vnext?.get(0)?.users?.get(0)?.security
-                protocol.equals(EConfigType.VLESS.name, true) -> settings?.vnext?.get(0)?.users?.get(0)?.encryption
-                protocol.equals(EConfigType.SHADOWSOCKS.name, true) -> settings?.servers?.get(0)?.method
+                protocol.equals(
+                    EConfigType.VMESS.name,
+                    true
+                ) -> settings?.vnext?.get(0)?.users?.get(0)?.security
+
+                protocol.equals(
+                    EConfigType.VLESS.name,
+                    true
+                ) -> settings?.vnext?.get(0)?.users?.get(0)?.encryption
+
+                protocol.equals(
+                    EConfigType.SHADOWSOCKS.name,
+                    true
+                ) -> settings?.servers?.get(0)?.method
+
                 else -> null
             }
         }
@@ -647,7 +692,11 @@ data class V2rayConfig(
             .disableHtmlEscaping()
             .registerTypeAdapter( // custom serialiser is needed here since JSON by default parse number as Double, core will fail to start
                 object : TypeToken<Double>() {}.type,
-                JsonSerializer { src: Double?, _: Type?, _: JsonSerializationContext? -> JsonPrimitive(src?.toInt()) }
+                JsonSerializer { src: Double?, _: Type?, _: JsonSerializationContext? ->
+                    JsonPrimitive(
+                        src?.toInt()
+                    )
+                }
             )
             .create()
             .toJson(this)

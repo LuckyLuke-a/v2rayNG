@@ -71,7 +71,14 @@ object VmessFmt {
             vmessQRCode.alpn,
             null,
             null,
-            null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
         )
 
         return config
@@ -146,7 +153,14 @@ object VmessFmt {
             queryParam["alpn"],
             null,
             null,
-            null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
         )
 
         return config

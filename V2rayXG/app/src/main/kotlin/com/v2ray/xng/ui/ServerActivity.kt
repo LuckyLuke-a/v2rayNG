@@ -113,6 +113,20 @@ class ServerActivity : BaseActivity() {
     private val container_short_id: LinearLayout? by lazy { findViewById(R.id.l7) }
     private val et_spider_x: EditText? by lazy { findViewById(R.id.et_spider_x) }
     private val container_spider_x: LinearLayout? by lazy { findViewById(R.id.l8) }
+    private val et_server_rand_packet: EditText? by lazy { findViewById(R.id.et_server_rand_packet) }
+    private val container_server_rand_packet: LinearLayout? by lazy { findViewById(R.id.l9) }
+    private val et_client_rand_packet: EditText? by lazy { findViewById(R.id.et_client_rand_packet) }
+    private val container_client_rand_packet: LinearLayout? by lazy { findViewById(R.id.l10) }
+    private val et_server_rand_packet_count: EditText? by lazy { findViewById(R.id.et_server_rand_packet_count) }
+    private val container_server_rand_packet_count: LinearLayout? by lazy { findViewById(R.id.l11) }
+    private val et_client_rand_packet_count: EditText? by lazy { findViewById(R.id.et_client_rand_packet_count) }
+    private val container_client_rand_packet_count: LinearLayout? by lazy { findViewById(R.id.l12) }
+    private val et_split_packet: EditText? by lazy { findViewById(R.id.et_split_packet) }
+    private val container_split_packet: LinearLayout? by lazy { findViewById(R.id.l13) }
+    private val et_padding_size: EditText? by lazy { findViewById(R.id.et_padding_size) }
+    private val container_padding_size: LinearLayout? by lazy { findViewById(R.id.l14) }
+    private val et_subchunk_size: EditText? by lazy { findViewById(R.id.et_subchunk_size) }
+    private val container_subchunk_size: LinearLayout? by lazy { findViewById(R.id.l15) }
     private val et_reserved1: EditText? by lazy { findViewById(R.id.et_reserved1) }
     private val et_reserved2: EditText? by lazy { findViewById(R.id.et_reserved2) }
     private val et_reserved3: EditText? by lazy { findViewById(R.id.et_reserved3) }
@@ -223,17 +237,54 @@ class ServerActivity : BaseActivity() {
                         container_spider_x?.visibility = View.VISIBLE
                     }
                 }
+                canShowSegaroParams()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 // do nothing
             }
         }
+        sp_flow?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                canShowSegaroParams()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                // do nothing
+            }
+
+        }
         if (config != null) {
             bindingServer(config)
         } else {
             clearServer()
         }
+    }
+
+    private fun canShowSegaroParams(): Boolean {
+        if (sp_stream_security?.selectedItem == "reality" && sp_flow?.selectedItem == "xtls-segaro-vision") {
+            container_server_rand_packet?.visibility = View.VISIBLE
+            container_client_rand_packet?.visibility = View.VISIBLE
+            container_server_rand_packet_count?.visibility = View.VISIBLE
+            container_client_rand_packet_count?.visibility = View.VISIBLE
+            container_split_packet?.visibility = View.VISIBLE
+            container_padding_size?.visibility = View.VISIBLE
+            container_subchunk_size?.visibility = View.VISIBLE
+            return true
+        }
+        container_server_rand_packet?.visibility = View.GONE
+        container_client_rand_packet?.visibility = View.GONE
+        container_server_rand_packet_count?.visibility = View.GONE
+        container_client_rand_packet_count?.visibility = View.GONE
+        container_split_packet?.visibility = View.GONE
+        container_padding_size?.visibility = View.GONE
+        container_subchunk_size?.visibility = View.GONE
+        return false
     }
 
     /**
@@ -335,6 +386,22 @@ class ServerActivity : BaseActivity() {
                     container_spider_x?.visibility = View.VISIBLE
                     et_spider_x?.text = Utils.getEditable(tlsSetting.spiderX.orEmpty())
                     container_allow_insecure?.visibility = View.GONE
+
+                    if (canShowSegaroParams()) {
+                        et_server_rand_packet?.text =
+                            Utils.getEditable(tlsSetting.serverRandPacket.orEmpty())
+                        et_client_rand_packet?.text =
+                            Utils.getEditable(tlsSetting.clientRandPacket.orEmpty())
+                        et_server_rand_packet_count?.text =
+                            Utils.getEditable(tlsSetting.serverRandPacketCount.orEmpty())
+                        et_client_rand_packet_count?.text =
+                            Utils.getEditable(tlsSetting.clientRandPacketCount.orEmpty())
+                        et_split_packet?.text = Utils.getEditable(tlsSetting.splitPacket.orEmpty())
+                        et_padding_size?.text =
+                            Utils.getEditable((tlsSetting.paddingSize ?: 0).toString())
+                        et_subchunk_size?.text =
+                            Utils.getEditable((tlsSetting.subchunkSize ?: 0).toString())
+                    }
                 }
             }
             if (streamSetting.tlsSettings == null && streamSetting.realitySettings == null) {
@@ -345,6 +412,7 @@ class ServerActivity : BaseActivity() {
                 container_public_key?.visibility = View.GONE
                 container_short_id?.visibility = View.GONE
                 container_spider_x?.visibility = View.GONE
+                canShowSegaroParams()
             }
         }
         val network = Utils.arrayFind(networks, streamSetting.network)
@@ -376,6 +444,13 @@ class ServerActivity : BaseActivity() {
         //et_security.text = null
         sp_flow?.setSelection(0)
         et_public_key?.text = null
+        et_server_rand_packet?.text = null
+        et_client_rand_packet?.text = null
+        et_server_rand_packet_count?.text = null
+        et_client_rand_packet_count?.text = null
+        et_split_packet?.text = null
+        et_padding_size?.text = null
+        et_subchunk_size?.text = null
         et_reserved1?.text = Utils.getEditable("0")
         et_reserved2?.text = Utils.getEditable("0")
         et_reserved3?.text = Utils.getEditable("0")
@@ -522,6 +597,13 @@ class ServerActivity : BaseActivity() {
         val publicKey = et_public_key?.text?.toString()?.trim() ?: return
         val shortId = et_short_id?.text?.toString()?.trim() ?: return
         val spiderX = et_spider_x?.text?.toString()?.trim() ?: return
+        val serverRandPacket = et_server_rand_packet?.text?.toString()?.trim() ?: return
+        val clientRandPacket = et_client_rand_packet?.text?.toString()?.trim() ?: return
+        val serverRandPacketCount = et_server_rand_packet_count?.text?.toString()?.trim() ?: return
+        val clientRandPacketCount = et_client_rand_packet_count?.text?.toString()?.trim() ?: return
+        val splitPacket = et_split_packet?.text?.toString()?.trim() ?: return
+        val paddingSize = et_padding_size?.text?.toString()?.toIntOrNull() ?: return
+        val subchunkSize = et_subchunk_size?.text?.toString()?.toIntOrNull() ?: return
 
         var sni = streamSetting.populateTransportSettings(
             transport = networks[network],
@@ -552,7 +634,14 @@ class ServerActivity : BaseActivity() {
             alpns = alpns[alpnIndex],
             publicKey = publicKey,
             shortId = shortId,
-            spiderX = spiderX
+            spiderX = spiderX,
+            serverRandPacket = serverRandPacket,
+            clientRandPacket = clientRandPacket,
+            serverRandPacketCount = serverRandPacketCount,
+            clientRandPacketCount = clientRandPacketCount,
+            splitPacket = splitPacket,
+            paddingSize = paddingSize,
+            subchunkSize = subchunkSize,
         )
     }
 

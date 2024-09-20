@@ -79,6 +79,13 @@
     <string name="server_lab_public_key">PublicKey</string>
     <string name="server_lab_short_id">ShortId</string>
     <string name="server_lab_spider_x">SpiderX</string>
+    <string name="server_lab_server_rand_packet">Server Rand Packet</string>
+    <string name="server_lab_client_rand_packet">Client Rand Packet</string>
+    <string name="server_lab_server_rand_packet_count">Server RandPacket Count</string>
+    <string name="server_lab_client_rand_packet_count">Client RandPacket Count</string>
+    <string name="server_lab_split_packet">Split Packet</string>
+    <string name="server_lab_padding_size">Padding Size</string>
+    <string name="server_lab_subchunk_size">Subchunk Size</string>
     <string name="server_lab_secret_key">SecretKey</string>
     <string name="server_lab_reserved">Reserved(可选)</string>
     <string name="server_lab_local_address">本地地址(可选IPv4/IPv6，逗号隔开)</string>
