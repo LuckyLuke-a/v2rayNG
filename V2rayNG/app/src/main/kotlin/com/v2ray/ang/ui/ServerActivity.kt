@@ -267,7 +267,7 @@ class ServerActivity : BaseActivity() {
     }
 
     private fun canShowSegaroParams(): Boolean {
-        if (sp_stream_security?.selectedItem == "reality" && sp_flow?.selectedItem == "xtls-segaro-vision") {
+        if (sp_stream_security?.selectedItem == "reality" && (sp_flow?.selectedItem == "xtls-segaro-vision" || sp_flow?.selectedItem == "xtls-segaro-vision-udp443")) {
             container_server_rand_packet?.visibility = View.VISIBLE
             container_client_rand_packet?.visibility = View.VISIBLE
             container_server_rand_packet_count?.visibility = View.VISIBLE

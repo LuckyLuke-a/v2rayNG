@@ -131,6 +131,7 @@
         <item>xtls-rprx-vision</item>
         <item>xtls-rprx-vision-udp443</item>
         <item>xtls-segaro-vision</item>
+        <item>xtls-segaro-vision-udp443</item>
     </string-array>
 
 

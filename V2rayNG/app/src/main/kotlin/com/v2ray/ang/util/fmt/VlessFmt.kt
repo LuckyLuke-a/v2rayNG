@@ -104,7 +104,7 @@ object VlessFmt {
             if (!TextUtils.isEmpty(tlsSetting.spiderX)) {
                 dicQuery["spx"] = Utils.urlEncode(tlsSetting.spiderX.orEmpty())
             }
-            if (dicQuery["flow"] == "xtls-segaro-vision") {
+            if (dicQuery["flow"] == "xtls-segaro-vision" || dicQuery["flow"] == "xtls-segaro-vision-udp443") {
                 if (!TextUtils.isEmpty(tlsSetting.serverRandPacket)) {
                     dicQuery["serverandpacket"] =
                         Utils.urlEncode(tlsSetting.serverRandPacket.orEmpty())
