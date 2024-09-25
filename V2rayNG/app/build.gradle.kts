@@ -14,6 +14,7 @@ android {
         versionCode = 592
         versionName = "1.9.1"
         multiDexEnabled = true
+
         splits {
             abi {
                 isEnable = true
